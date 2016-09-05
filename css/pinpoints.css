@@ -1,0 +1,54 @@
+.pinpoint {
+	padding:10px;
+	width:300px;
+
+	background: #eee;
+	border-radius: 2px;
+	display: inline-block;
+	margin: 1rem;
+	position: absolute;
+
+	box-shadow: 0 10px 20px rgba(0,0,0,0.19), 5px 6px 6px rgba(0,0,0,0.23);
+
+	transition: all .2s ease-out;
+	transform: scale(0.95);
+	z-index:1;
+	-webkit-filter: grayscale(100%);
+}
+
+
+.pinpoint.hover, .pinpoint.click_hover{
+	opacity:1;
+	transform: scale(1.0);
+	z-index:100;
+	box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+	-webkit-filter: grayscale(0%);
+}
+
+.pinpoint > input[type="text"] {
+	border:1px solid #ddd;
+	height:2.5em;
+	line-height:2.5em;
+	font-size:1.2em;
+	padding-left:5px;
+	width:100%;
+}
+
+.pinpoint > input[type="button"] {
+	margin-top:10px;
+	padding:10px;
+	line-height:12px;
+	height:32px;
+	float:right;
+	background-color:#0f9d58;
+	text-align:center;
+	color:#fff;
+	border:none;
+	box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
+	width:100px;
+}
+
+.pinpoint > label {
+	font-size:0.8em;
+}
+

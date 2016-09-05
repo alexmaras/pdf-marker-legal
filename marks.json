@@ -1,0 +1,21 @@
+{
+	"mark-1": {
+		"page": 1,
+		"start_line": 17,
+		"start_char": 8,
+		"end_line": 20,
+		"end_char": 5,
+		"text": "s, PDF was popular mainly in desktop publishing workflows.PDF's adoption in the early days of the format's history was slow. Adobe Acrobat, Adobe's suite for reading and creating PDF files, was not freely available; early versions of PDF had no support for exter",
+		"mark_id": "TEST1"
+	},
+	"mark-2": {
+		"page": 1,
+		"start_line": 4,
+		"start_char": 8,
+		"end_line": 8,
+		"end_char": 5,
+		"text": "o display it. In 1991, Adobe Systems co-founder John Warnock outlined a system called \"Camelot\" that evolved into PDF. While Adobe Systems made the PDF specification available free of charge in 1993, PDF remained a proprietary format, controlled by Adobe, until it was officially released as an open standard on July 1, 2008,",
+		"mark_id": "TEST2"
+	}
+
+}

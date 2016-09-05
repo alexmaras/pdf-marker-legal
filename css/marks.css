@@ -1,0 +1,8 @@
+mark {
+	color: transparent;
+	background-color: rgba(16, 75, 239, 0.33);
+}
+
+mark.selected{
+	background-color: rgba(236, 75, 75, 0.33);
+}
