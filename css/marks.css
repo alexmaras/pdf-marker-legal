@@ -6,3 +6,20 @@ mark {
 mark.selected{
 	background-color: rgba(236, 75, 75, 0.33);
 }
+
+mark.selected > span.drag {
+	position:absolute;
+	height:24px;
+	width:5px;
+	margin-top:-3px;
+}
+
+mark.selected > span.drag.start {
+	border-left: 3px solid red;	
+	cursor: w-resize;
+}
+mark.selected > span.drag.end {
+	border-right: 3px solid red;	
+	cursor: e-resize;
+	margin-left: -5px;
+}
