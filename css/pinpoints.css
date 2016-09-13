@@ -9,7 +9,7 @@
 	position: absolute;
 
 	box-shadow: 0 10px 20px rgba(0,0,0,0.19), 5px 6px 6px rgba(0,0,0,0.23);
-
+	opacity:0;
 	transition: all .2s ease-out;
 	transform: scale(0.95);
 	z-index:1;
@@ -52,3 +52,8 @@
 	font-size:0.8em;
 }
 
+.pinpoint > .pinpoint_close {
+	color: grey;
+	float: right;
+	cursor: pointer;
+}

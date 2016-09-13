@@ -3,6 +3,11 @@ var mark_list = new Object();
 var stock_pinpoint = document.createElement("div");
 stock_pinpoint.className = "pinpoint";
 
+var stock_pinpoint_close = document.createElement("span");
+stock_pinpoint_close.className = "pinpoint_close";
+stock_pinpoint_close.appendChild(document.createTextNode("X"));
+stock_pinpoint.appendChild(stock_pinpoint_close);
+
 var stock_pinpoint_text = document.createElement("p");
 stock_pinpoint_text.className = "pinpoint_text";
 stock_pinpoint.appendChild(stock_pinpoint_text);
@@ -53,6 +58,9 @@ function renderMark(page, start_node_index, start_text_index, end_node_index, en
 			if (i == start_node_index) {
 				var marked = text.substr(start_text_index);
 				var new_mark = document.createElement("mark");
+				//var left_drag = document.createElement("span");
+				//left_drag.className = "drag start";
+				//new_mark.appendChild(left_drag);
 				new_mark.appendChild(document.createTextNode(marked));
 				new_mark.className = mark_id + "_highlight";
 
@@ -80,7 +88,10 @@ function renderMark(page, start_node_index, start_text_index, end_node_index, en
 
 				var marked = text.substr(0, end_text_index);
 				var new_mark = document.createElement("mark");
+				//var right_drag = document.createElement("span");
+				//right_drag.className = "drag end";
 				new_mark.appendChild(document.createTextNode(marked));
+				//new_mark.appendChild(right_drag);
 				new_mark.className = mark_id + "_highlight";
 
 				var line_array = [];
@@ -152,12 +163,15 @@ function renderMark(page, start_node_index, start_text_index, end_node_index, en
 		child_node.insertBefore(document.createTextNode(not_marked_start), child_node.childNodes[target_node_index]);
 	}
 
-	addPinpoint(mark_text, mark_id, "KJDK");
+	addPinpoint(mark_text, mark_id, "");
 }
 
 function addPinpoint(text, id, value){
 	var new_pinpoint = stock_pinpoint.cloneNode(true);
 	new_pinpoint.id = id + "_pinpoint";
+
+	var new_pinpoint_close = new_pinpoint.getElementsByClassName("pinpoint_close")[0];
+	new_pinpoint_close.id = id + "_pinpoint_close";
 
 	var new_pinpoint_text = new_pinpoint.getElementsByClassName("pinpoint_text")[0];
 	new_pinpoint_text.appendChild(document.createTextNode(text));
@@ -216,9 +230,9 @@ function addPinpoint(text, id, value){
 		}
 	};
 
-	new_pinpoint.addEventListener('mouseenter', highlight_hover);
-	new_pinpoint.addEventListener('mouseleave', highlight_no_hover);
-	new_pinpoint.addEventListener('click', highlight_click);
+	var close_clicked = function() {
+		highlight_lines[0].click();
+	};
 
 	for(var i = 0; i < highlight_lines.length; i++){
 		highlight_lines[i].addEventListener('mouseenter', highlight_hover);
@@ -226,8 +240,11 @@ function addPinpoint(text, id, value){
 		highlight_lines[i].addEventListener('click', highlight_click);
 	}
 
+	new_pinpoint_close.addEventListener('click', close_clicked);
 
 	document.body.appendChild(new_pinpoint);
+
+	highlight_lines[0].click();
 }
 
 function getMarks(){
