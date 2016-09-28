@@ -1,17 +1,16 @@
 .pinpoint {
 	padding:10px;
 	width:300px;
+	font-size:0.5em;
 
 	background: #eee;
 	border-radius: 2px;
 	display: inline-block;
-	margin: 1rem;
-	position: absolute;
 
-	box-shadow: 0 10px 20px rgba(0,0,0,0.19), 5px 6px 6px rgba(0,0,0,0.23);
-	opacity:0;
-	transition: all .2s ease-out;
-	transform: scale(0.95);
+	border: 1px solid #d6d6d6;
+
+	opacity:1;
+	transition: all .1s ease;
 	z-index:1;
 	-webkit-filter: grayscale(100%);
 }
@@ -19,10 +18,18 @@
 
 .pinpoint.hover, .pinpoint.click_hover{
 	opacity:1;
+	font-size:1em;
+	height:auto;
 	transform: scale(1.0);
 	z-index:100;
 	box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
 	-webkit-filter: grayscale(0%);
+	
+	border: none;
+	box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+
+	margin-top:10px;
+	margin-bottom:10px;
 }
 
 .pinpoint > input[type="text"] {
@@ -30,13 +37,11 @@
 	height:2.5em;
 	line-height:2.5em;
 	font-size:1.2em;
-	padding-left:5px;
 	width:100%;
 }
 
 .pinpoint > input[type="button"] {
 	margin-top:10px;
-	padding:10px;
 	line-height:12px;
 	height:32px;
 	float:right;
@@ -52,8 +57,26 @@
 	font-size:0.8em;
 }
 
-.pinpoint > .pinpoint_close {
+.pinpoint > .pinpoint_close, .pinpoint > .pinpoint_save, .pinpoint > .pinpoint_input, .pinpoint > .pinpoint_label {
+	display:none;
+}
+
+.pinpoint.click_hover > .pinpoint_save,  .pinpoint.click_hover > .pinpoint_close, .pinpoint.click_hover > .pinpoint_input, .pinpoint.click_hover > .pinpoint_label {
+	display:block;
+}
+
+.pinpoint.hover > .pinpoint_close,
+.pinpoint.click_hover > .pinpoint_close {
 	color: grey;
 	float: right;
 	cursor: pointer;
+}
+
+#pinpointContainer {
+	position:fixed;
+	top:100px;
+	right:10px;
+	width:400px;
+	height:80%;
+	overflow-y:scroll;
 }

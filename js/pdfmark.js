@@ -187,12 +187,17 @@ function addPinpoint(text, id, value){
 
 	var highlight_lines = document.getElementsByClassName(id + "_highlight");
 
-	new_pinpoint.style.top = highlight_lines[0].getBoundingClientRect().top;
-	new_pinpoint.style.left = document.getElementById("textLayer").getBoundingClientRect().right;
+	//new_pinpoint.style.top = highlight_lines[0].getBoundingClientRect().top;
+	//new_pinpoint.style.left = document.getElementById("textLayer").getBoundingClientRect().right;
 
 	var highlight_hover = function() {
 		if(document.getElementsByClassName("pinpoint click_hover").length == 0){
 			new_pinpoint.className = "pinpoint hover";
+			new_pinpoint.addEventListener("webkitTransitionEnd", function(e) {
+				e.target.removeEventListener(e.type, arguments.callee);
+				console.log("HELLO");
+				document.getElementById("pinpointContainer").scrollTop = new_pinpoint.offsetTop;
+			});
 		}
 	};
 
@@ -222,6 +227,7 @@ function addPinpoint(text, id, value){
 
 		if(!remove){
 			new_pinpoint.className = "pinpoint click_hover";
+			document.getElementById("pinpointContainer").scrollTop = new_pinpoint.offsetTop;
 			for(var i = 0; i < highlight_lines.length; i++){
 				if(!/\bselected\b/.test(highlight_lines[i].className)){
 					highlight_lines[i].className = highlight_lines[i].className + " selected";
@@ -242,7 +248,7 @@ function addPinpoint(text, id, value){
 
 	new_pinpoint_close.addEventListener('click', close_clicked);
 
-	document.body.appendChild(new_pinpoint);
+	document.getElementById("pinpointContainer").appendChild(new_pinpoint);
 
 	highlight_lines[0].click();
 }
