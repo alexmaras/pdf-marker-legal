@@ -1,10 +1,10 @@
 .pinpoint {
-	padding:10px;
+	padding-left:10px;
+	padding-right:10px;
 	width:300px;
-	font-size:0.5em;
+	font-size:0.7em;
 
 	background: #eee;
-	border-radius: 2px;
 	display: inline-block;
 
 	border: 1px solid #d6d6d6;
@@ -17,6 +17,7 @@
 
 
 .pinpoint.hover, .pinpoint.click_hover{
+	border-radius: 2px;
 	opacity:1;
 	font-size:1em;
 	height:auto;
@@ -27,6 +28,8 @@
 	
 	border: none;
 	box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+
+        padding:10px;
 
 	margin-top:10px;
 	margin-bottom:10px;
@@ -70,6 +73,7 @@
 	color: grey;
 	float: right;
 	cursor: pointer;
+        font-size:0.6em;
 }
 
 #pinpointContainer {
