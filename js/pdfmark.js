@@ -265,11 +265,13 @@ function getMarks(){
 }
 
 function createMark(selection){
-
-	if(selection.type != "Range"){
-		alert("Please select some text first");
+        sel = window.getSelection();
+        if (sel.isCollapsed) {
+        	alert("Please select some text first");
 		return false;
 	}
+
+        snapSelectionToWord();
 
 	var obj = new Object();
 
