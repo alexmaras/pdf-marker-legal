@@ -14,12 +14,11 @@ stock_pinpoint.appendChild(stock_pinpoint_text);
 
 var stock_pinpoint_label = document.createElement("label");
 stock_pinpoint_label.className = "pinpoint_label";
-stock_pinpoint_label.textContent = "value:";
+stock_pinpoint_label.textContent = "note:";
 stock_pinpoint.appendChild(stock_pinpoint_label);
 
-var stock_pinpoint_input = document.createElement("input");
+var stock_pinpoint_input = document.createElement("textarea");
 stock_pinpoint_input.className = "pinpoint_input";
-stock_pinpoint_input.type = "text";
 stock_pinpoint.appendChild(stock_pinpoint_input);
 
 var stock_pinpoint_save = document.createElement("input");
@@ -28,6 +27,13 @@ stock_pinpoint_save.type = "button";
 stock_pinpoint_save.disabled = true;
 stock_pinpoint_save.value = "SAVE";
 stock_pinpoint.appendChild(stock_pinpoint_save);
+
+var stock_pinpoint_cancel = document.createElement("input");
+stock_pinpoint_cancel.className = "pinpoint_cancel";
+stock_pinpoint_cancel.type = "button";
+stock_pinpoint_cancel.disabled = true;
+stock_pinpoint_cancel.value = "CANCEL";
+stock_pinpoint.appendChild(stock_pinpoint_cancel);
 
 function addToMarks(new_mark){
 	for(o in mark_list){
@@ -254,7 +260,7 @@ function addPinpoint(text, id, value){
 }
 
 function getMarks(){
-	var endpoint = "http://sugdev01.wanews.com.au/pdfjs/marks.json";
+	var endpoint = "marks.json";
 	$.ajax({
 		url: endpoint,
 	}).done(function(data) {
