@@ -79,12 +79,6 @@
     display:block;
 }
 
-.pinpoint.hover > .pinpoint_text, .pinpoint.click_hover > .pinpoint_text {
-    white-space:normal;
-    overflow:hidden;
-    text-overflow:initial;
-}
-
 .pinpoint.hover > .pinpoint_close,
 .pinpoint.click_hover > .pinpoint_close {
     color: grey;
