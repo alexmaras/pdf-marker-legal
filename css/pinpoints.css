@@ -1,87 +1,102 @@
 .pinpoint {
-	padding-left:10px;
-	padding-right:10px;
-	width:300px;
-	font-size:0.7em;
+    width:90%;
+    padding-left:10px;
+    padding-right:10px;
+    /*font-size:0.7em;*/
 
-	background: #eee;
-	display: inline-block;
+    background: #eee;
+    display: inline-block;
 
-	border: 1px solid #d6d6d6;
+    border: 1px solid #d6d6d6;
 
-	opacity:1;
-	transition: all .1s ease;
-	z-index:1;
-	-webkit-filter: grayscale(100%);
+    opacity:1;
+    transition: all .5s ease;
+    z-index:1;
+    -webkit-filter: grayscale(100%);
 }
 
+.pinpoint > .pinpoint_text {
+    width:100%;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+}
 
 .pinpoint.hover, .pinpoint.click_hover{
-	border-radius: 2px;
-	opacity:1;
-	font-size:1em;
-	height:auto;
-	transform: scale(1.0);
-	z-index:100;
-	box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
-	-webkit-filter: grayscale(0%);
-	
-	border: none;
-	box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+    border-radius: 2px;
+    opacity:1;
+    font-size:1em;
+    height:auto;
+    transform: scale(1.0);
+    z-index:100;
+    box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+    -webkit-filter: grayscale(0%);
 
-        padding:10px;
+    border: none;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
 
-	margin-top:10px;
-	margin-bottom:10px;
+    padding:10px;
+
+    margin-top:10px;
+    margin-bottom:10px;
 }
 
 .pinpoint > input[type="text"] {
-	border:1px solid #ddd;
-	height:2.5em;
-	line-height:2.5em;
-	font-size:1.2em;
-	width:100%;
+    border:1px solid #ddd;
+    height:2.5em;
+    line-height:2.5em;
+    font-size:1.2em;
+    width:100%;
 }
 
 .pinpoint > input[type="button"] {
-	margin-top:10px;
-	line-height:12px;
-	height:32px;
-	float:right;
-	background-color:#0f9d58;
-	text-align:center;
-	color:#fff;
-	border:none;
-	box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
-	width:100px;
+    margin-top:10px;
+    line-height:12px;
+    height:32px;
+    float:right;
+    background-color:#0f9d58;
+    text-align:center;
+    color:#fff;
+    border:none;
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
+    width:100px;
 }
 
 .pinpoint > label {
-	font-size:0.8em;
+    font-size:0.8em;
 }
 
 .pinpoint > .pinpoint_close, .pinpoint > .pinpoint_save, .pinpoint > .pinpoint_input, .pinpoint > .pinpoint_label {
-	display:none;
+    display:none;
 }
 
 .pinpoint.click_hover > .pinpoint_save,  .pinpoint.click_hover > .pinpoint_close, .pinpoint.click_hover > .pinpoint_input, .pinpoint.click_hover > .pinpoint_label {
-	display:block;
+    display:block;
+}
+
+.pinpoint.hover > .pinpoint_text, .pinpoint.click_hover > .pinpoint_text {
+    white-space:normal;
+    overflow:hidden;
+    text-overflow:initial;
 }
 
 .pinpoint.hover > .pinpoint_close,
 .pinpoint.click_hover > .pinpoint_close {
-	color: grey;
-	float: right;
-	cursor: pointer;
-        font-size:0.6em;
+    color: grey;
+    float: right;
+    cursor: pointer;
+    font-size:0.6em;
 }
 
 #pinpointContainer {
-	position:fixed;
-	top:0px;
-	right:0px;
-	width:340px;
-	height:100%;
-	overflow-y:scroll;
+    position:fixed;
+    top:0px;
+    right:0px;
+    width:20%;
+    height:100%;
+    overflow-y:scroll;
+}
 
+.content {
+    width: 80%;
 }
