@@ -1,3 +1,10 @@
+#createPinpoint {
+	position:fixed;
+	top:0;
+	left:0;
+	z-index:10;
+}
+
 .pinpoint {
     width:90%;
     padding-left:10px;

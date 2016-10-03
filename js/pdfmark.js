@@ -44,7 +44,6 @@ function addToMarks(new_mark){
 			return false;
 		}
 	}
-	console.log(new_mark.mark_id);
 	mark_list[new_mark.mark_id] = new_mark;
 
 	renderMark(new_mark.page, new_mark.start_line, new_mark.start_char, new_mark.end_line, new_mark.end_char, new_mark.text, new_mark.mark_id);
@@ -55,7 +54,7 @@ function addToMarks(new_mark){
 
 function renderMark(page, start_node_index, start_text_index, end_node_index, end_text_index, mark_text, mark_id){
 
-	var parent_node = document.getElementById("textLayer");
+	var parent_node = document.getElementById("page_" + page);
 	if(start_node_index != end_node_index){
 		for(var i = start_node_index; i <= end_node_index; i++){
 			var child_node = parent_node.children[i];
@@ -201,7 +200,6 @@ function addPinpoint(text, id, value){
 			new_pinpoint.className = "pinpoint hover";
 			new_pinpoint.addEventListener("webkitTransitionEnd", function(e) {
 				e.target.removeEventListener(e.type, arguments.callee);
-				console.log("HELLO");
 				document.getElementById("pinpointContainer").scrollTop = new_pinpoint.offsetTop;
 			});
 		}
@@ -259,25 +257,28 @@ function addPinpoint(text, id, value){
 	highlight_lines[0].click();
 }
 
-function getMarks(){
+function getMarks(page_num){
 	var endpoint = "marks.json";
 	$.ajax({
 		url: endpoint,
 	}).done(function(data) {
 		for(i in data){
-			addToMarks(data[i]);
+			console.log(page_num);
+			if(data[i].page == page_num){
+				addToMarks(data[i]);
+			}
 		}
 	});
 }
 
-function createMark(selection){
-        sel = window.getSelection();
-        if (sel.isCollapsed) {
-        	alert("Please select some text first");
+function createMark(){
+    selection = window.getSelection();
+    if (selection.isCollapsed) {
+     	alert("Please select some text first");
 		return false;
 	}
 
-        snapSelectionToWord();
+    snapSelectionToWord();
 
 	var obj = new Object();
 
@@ -315,7 +316,7 @@ function createMark(selection){
 	}
 	if(start_line == end_line){
 		var pre_length = 0;
-		var parent_node = selection.anchorNode.parentNode
+		//var parent_node = selection.anchorNode.parentNode
 		for(var i = 0; i < selection.anchorNode.parentNode.childNodes.length; i++){
 			if(selection.anchorNode == parent_node.childNodes[i]){
 				break;
@@ -330,7 +331,9 @@ function createMark(selection){
 	obj.start_char = start_char;
 	obj.end_line = end_line;
 	obj.end_char = end_char;
-	obj.page = 1;
+	var pageNumber = parseInt(parent_node.id.substr(5));
+	console.log(pageNumber);
+	obj.page = pageNumber;
 	obj.mark_id = new Date().getTime();
 	obj.text = selection.toString();
 

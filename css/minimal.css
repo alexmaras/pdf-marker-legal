@@ -3,7 +3,18 @@ body {
 }
 
 .pdf-content {
-    border: 1px solid #000000;
+	overflow-y: auto;
+	overflow-x: hidden;
+	padding:60px;
+	background-color:#464646;
+	
+	position:fixed;
+	max-width:100%;
+	max-height:90%;
+}
+
+.pdf-content > canvas {
+	margin-bottom:20px;
 }
 
 /* CSS classes used by TextLayerBuilder to style the text layer divs */
