@@ -71,6 +71,11 @@
     font-size:0.8em;
 }
 
+.pinpoint > .pinpoint_text:hover {
+    white-space:normal;
+    
+}
+
 .pinpoint > .pinpoint_close, .pinpoint > .pinpoint_save, .pinpoint > .pinpoint_input, .pinpoint > .pinpoint_label, .pinpoint > .pinpoint_cancel {
     display:none;
 }
