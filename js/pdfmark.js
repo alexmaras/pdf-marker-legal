@@ -38,7 +38,8 @@ stock_pinpoint.appendChild(stock_pinpoint_cancel);
 function addToMarks(new_mark){
 	for(o in mark_list){
 		if(	mark_list[o].start_line < new_mark.start_line &&
-			mark_list[o].end_line   > new_mark.start_line)
+			mark_list[o].end_line   > new_mark.start_line &&
+			mark_list[o].page == new_mark.page)
 		{
 			console.log("NO");
 			return false;
@@ -263,7 +264,6 @@ function getMarks(page_num){
 		url: endpoint,
 	}).done(function(data) {
 		for(i in data){
-			console.log(page_num);
 			if(data[i].page == page_num){
 				addToMarks(data[i]);
 			}
@@ -316,12 +316,12 @@ function createMark(){
 	}
 	if(start_line == end_line){
 		var pre_length = 0;
-		//var parent_node = selection.anchorNode.parentNode
+		var parent_node_tmp = selection.anchorNode.parentNode
 		for(var i = 0; i < selection.anchorNode.parentNode.childNodes.length; i++){
-			if(selection.anchorNode == parent_node.childNodes[i]){
+			if(selection.anchorNode == parent_node_tmp.childNodes[i]){
 				break;
 			}
-			pre_length += parent_node.childNodes[i].textContent.length;
+			pre_length += parent_node_tmp.childNodes[i].textContent.length;
 		}
 		start_char += pre_length;
 		end_char += pre_length;
@@ -332,7 +332,6 @@ function createMark(){
 	obj.end_line = end_line;
 	obj.end_char = end_char;
 	var pageNumber = parseInt(parent_node.id.substr(5));
-	console.log(pageNumber);
 	obj.page = pageNumber;
 	obj.mark_id = new Date().getTime();
 	obj.text = selection.toString();
