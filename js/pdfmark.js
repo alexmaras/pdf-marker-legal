@@ -283,6 +283,10 @@ function createMark(){
 	var obj = new Object();
 
 	var parent_node = selection.anchorNode.parentNode.parentNode;
+	if(parent_node.id.substr(0,5) != "page_"){
+		return;
+	}
+
 	var start_line = obj.start_line = Array.prototype.indexOf.call(parent_node.children, selection.anchorNode.parentNode);
 	var start_char = selection.anchorOffset;
 	var end_line = Array.prototype.indexOf.call(parent_node.children, selection.focusNode.parentNode);
@@ -335,6 +339,10 @@ function createMark(){
 	obj.page = pageNumber;
 	obj.mark_id = new Date().getTime();
 	obj.text = selection.toString();
+
+	if(obj.start_line == -1 || obj.end_line == -1){
+		return;
+	}
 
 	addToMarks(obj);
 
