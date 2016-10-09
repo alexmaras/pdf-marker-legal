@@ -55,72 +55,86 @@ function addToMarks(new_mark){
 function renderMark(page, start_node_index, start_text_index, end_node_index, end_text_index, mark_text, mark_id){
 
 	var parent_node = document.getElementById("page_" + page);
-	if(start_node_index != end_node_index){
-		for(var i = start_node_index; i <= end_node_index; i++){
-			var child_node = parent_node.children[i];
+	if(start_node_index != end_node_index){ // multiple lines
+		for(var i = start_node_index; i <= end_node_index; i++){ // for each node
+			var child_node = parent_node.children[i]; // line to operate on
 			var text = child_node.textContent;
 
-			if (i == start_node_index) {
+			if (i == start_node_index) { // if we're on the first line, look at the start char on this line
+
+				// create a new "mark" element, with the text from the beginning char index
 				var marked = text.substr(start_text_index);
 				var new_mark = document.createElement("mark");
-				//var left_drag = document.createElement("span");
-				//left_drag.className = "drag start";
-				//new_mark.appendChild(left_drag);
 				new_mark.appendChild(document.createTextNode(marked));
 				new_mark.className = mark_id + "_highlight";
 
+				// build an array of all the nodes in the parent. 
 				var length = child_node.childNodes.length;
 				var line_array = [];
 				for(k = 0; k < length; k++){
 					line_array.push(child_node.childNodes[k]);
 				}
 
+				// remove the last one (always the one we're operating on in a multi-line first-line situation)
 				var last_node = line_array.pop();
-				var pre_node = document.createTextNode(last_node.textContent.substr(0,last_node.textContent.length-new_mark.textContent.length));
+				// make a node of all the text prior to the start of our mark
+				var pre_node = document.createTextNode(
+					last_node.textContent.substr(
+						0,
+						last_node.textContent.length - new_mark.textContent.length
+					)
+				);
 
+				// push on all the text pre-mark, then the mark itself
 				line_array.push(pre_node);
 				line_array.push(new_mark);
 
+				// remove all the children of the parent
 				while(child_node.firstChild){
 					child_node.removeChild(child_node.firstChild);
 				}
 
+				// rebuild the parent using the line array
 				for(q in line_array){
 					child_node.appendChild(line_array[q]);
 				}
 
-			} else if (i == end_node_index) {
+			} else if (i == end_node_index) { // if we're on the last line, look at the end char on this line
 
+				// create a new mark using all the text prior to the end text index
 				var marked = text.substr(0, end_text_index);
 				var new_mark = document.createElement("mark");
-				//var right_drag = document.createElement("span");
-				//right_drag.className = "drag end";
 				new_mark.appendChild(document.createTextNode(marked));
-				//new_mark.appendChild(right_drag);
 				new_mark.className = mark_id + "_highlight";
 
+				// push the mark onto a blank line array
 				var line_array = [];
 				line_array.push(new_mark);
 				var first_node = child_node.firstChild;
 
+				// make a "post node" from all the text after the mark node and before any other nodes and add it to the line array
 				var post_node = document.createTextNode(first_node.textContent.substr(new_mark.textContent.length));
 				line_array.push(post_node);
 
+				// remove the node we've just added to the line array
 				child_node.removeChild(child_node.firstChild);
 
+				// add all other nodes to the line array on the end
 				for(k = 0; k < child_node.childNodes.length; k++){
 					line_array.push(child_node.childNodes[k]);
 				}
 
+				// remove all child nodes from the parent
 				while(child_node.firstChild){
 					child_node.removeChild(child_node.firstChild);
 				}
 
+				// rebuild the parent from the line array
 				for(q in line_array){
 					child_node.appendChild(line_array[q]);
 				}
 
-			} else {
+			} else { // if we're on a multiline mark and not on the first or last line, we take the whole line.
 				var new_mark = document.createElement("mark");
 				new_mark.appendChild(document.createTextNode(text));
 				new_mark.className = mark_id + "_highlight";
@@ -128,7 +142,7 @@ function renderMark(page, start_node_index, start_text_index, end_node_index, en
 				child_node.appendChild(new_mark);
 			}
 		}
-	} else {
+	} else { // we are on a single line mark
 		var child_node = parent_node.children[start_node_index];
 		var text = child_node.textContent;
 
@@ -138,36 +152,49 @@ function renderMark(page, start_node_index, start_text_index, end_node_index, en
 		var pre_length = 0;
 		var post_length = 0;
 
-
+		// build an array of all child nodes of the line
 		for(k = 0; k < child_node.childNodes.length; k++){
 			line_array.push(child_node.childNodes[k]);
 
+			// if we haven't found our target node index yet (the node where the mark will start)
 			if(target_node_index == -1){
+				// add to the total length of all text nodes so far. if the total length is larger 
+				// than the start_text_index, we've found the target node and we can set target_node_index
 				total_length += child_node.childNodes[k].textContent.length;
 				if(total_length > start_text_index){
 					target_node_index = k;
-				} else {
+				} else { 
+					// otherwise, we add onto the pre_length variable to keep track
 					pre_length += child_node.childNodes[k].textContent.length;
 				}
 			} else {
+				// after finding the target node index, we want to track how many chars come after that node
 				post_length += child_node.childNodes[k].textContent.length;
 			}
 		}
+
+		// create the not marked start string (all text prior to the mark and after any non-text nodes)
 		var not_marked_start = text.substr(pre_length, start_text_index - pre_length);
+		// create the marked text string
 		var marked = text.substr(start_text_index, end_text_index - start_text_index);
+		// create the not marked end string (all text after the mark and before any non-text nodes)
 		var not_marked_end = text.substr(end_text_index, child_node.textContent.length - post_length - pre_length - marked.length - not_marked_start.length);
 
+		// create the mark
 		var new_mark = document.createElement("mark");
 		new_mark.appendChild(document.createTextNode(marked));
 		new_mark.className = mark_id + "_highlight";
 
+		// remove the node that we've been operating on from the parent
 		child_node.removeChild(child_node.childNodes[target_node_index]);
 
+		// insert the end, middle then start so they order correctly.
 		child_node.insertBefore(document.createTextNode(not_marked_end), child_node.childNodes[target_node_index]);
 		child_node.insertBefore(new_mark, child_node.childNodes[target_node_index]);
 		child_node.insertBefore(document.createTextNode(not_marked_start), child_node.childNodes[target_node_index]);
 	}
 
+	// add the pinpoint
 	addPinpoint(mark_text, mark_id, "");
 }
 
