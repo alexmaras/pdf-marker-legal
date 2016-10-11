@@ -69,7 +69,7 @@ function renderMark(page, start_node_index, start_text_index, end_node_index, en
 				new_mark.appendChild(document.createTextNode(marked));
 				new_mark.className = mark_id + "_highlight";
 
-				// build an array of all the nodes in the parent. 
+				// build an array of all the nodes in the parent.
 				var length = child_node.childNodes.length;
 				var line_array = [];
 				for(k = 0; k < length; k++){
@@ -159,12 +159,12 @@ function renderMark(page, start_node_index, start_text_index, end_node_index, en
 
 			// if we haven't found our target node index yet (the node where the mark will start)
 			if(target_node_index == -1){
-				// add to the total length of all text nodes so far. if the total length is larger 
+				// add to the total length of all text nodes so far. if the total length is larger
 				// than the start_text_index, we've found the target node and we can set target_node_index
 				total_length += child_node.childNodes[k].textContent.length;
 				if(total_length > start_text_index){
 					target_node_index = k;
-				} else { 
+				} else {
 					// otherwise, we add onto the pre_length variable to keep track
 					pre_length += child_node.childNodes[k].textContent.length;
 				}
@@ -280,7 +280,44 @@ function addPinpoint(text, id, value){
 
 	new_pinpoint_close.addEventListener('click', close_clicked);
 
-	document.getElementById("pinpointContainer").appendChild(new_pinpoint);
+
+	var pinpoint_info = mark_list[id];
+	var next_node = null;
+
+	var existing_nodes = document.getElementById("pinpointContainer").children;
+
+	for (var key in mark_list) {
+		// skip loop if the property is from prototype
+		if (!mark_list.hasOwnProperty(key)) continue;
+
+		var mark_item = mark_list[key];
+
+		// if the mark we're looking at appears after our own mark, it's a candidate for next_node
+		if( (mark_item.page > pinpoint_info.page) ||
+			(mark_item.page == pinpoint_info.page && mark_item.start_line > pinpoint_info.start_line) ||
+			(mark_item.page == pinpoint_info.page && mark_item.start_line == pinpoint_info.start_line && mark_item.start_char > pinpoint_info.start_char)){
+
+			// if we don't have a next_node yet, this is it for the mo'
+			if(next_node === null){
+				next_node = mark_item;
+			// but if we do have a next node, the mark we're looking at should be before the next_node we currently have to be considered the new next_node
+			} else if(  (mark_item.page < next_node.page) ||
+						(mark_item.page == next_node.page && mark_item.start_line < next_node.start_line) ||
+						(mark_item.page == next_node.page && mark_item.start_line == next_node.start_line && mark_item.start_char < next_node.start_char)){
+				next_node = mark_item;
+			}
+		}
+	}
+
+	if(next_node !== null){
+		next_node = document.getElementById(next_node.mark_id + "_pinpoint");
+	}
+
+	if(next_node === null){
+		document.getElementById("pinpointContainer").appendChild(new_pinpoint);
+	} else {
+		document.getElementById("pinpointContainer").insertBefore(new_pinpoint, next_node);
+	}
 
 	highlight_lines[0].click();
 }
